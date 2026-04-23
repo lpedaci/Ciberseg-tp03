@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TP 03 – Seguridad Física | Seguridad Informática</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --primary: #1a3a5c;
+    --accent: #e84545;
+    --accent2: #f5a623;
+    --light: #f4f7fb;
+    --white: #ffffff;
+    --text: #1e2a38;
+    --muted: #5c6b7e;
+    --border: #d0dce8;
+    --card-bg: #ffffff;
+    --highlight: #eaf3ff;
+    --highlight2: #fff7e6;
+    --highlight3: #ffeaea;
+    --nav-h: 60px;
+    --tab-h: 52px;
+    --footer-h: 56px;
+    --radius: 14px;
+    --shadow: 0 4px 24px rgba(26,58,92,0.10);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Sora', sans-serif;
+    background: var(--light);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.75;
+    padding-top: calc(var(--nav-h) + var(--tab-h));
+    padding-bottom: var(--footer-h);
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--nav-h);
+    background: var(--primary);
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    z-index: 1000;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+    gap: 14px;
+  }
+  nav .logo {
+    display: flex; align-items: center; gap: 10px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+  nav .logo i { color: var(--accent); font-size: 18px; }
+  nav .subtitle {
+    color: rgba(255,255,255,0.55);
+    font-size: 12px;
+    font-weight: 300;
+    display: none;
+  }
+  @media(min-width:520px){ nav .subtitle { display: block; } }
+  nav .spacer { flex: 1; }
+  nav .badge {
+    background: var(--accent);
+    color: #fff;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 12px;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+
+  /* ── TAB BAR ── */
+  .tabbar {
+    position: fixed;
+    top: var(--nav-h); left: 0; right: 0;
+    height: var(--tab-h);
+    background: var(--white);
+    border-bottom: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    gap: 0;
+    z-index: 999;
+    scrollbar-width: none;
+    padding: 0 8px;
+    box-shadow: 0 2px 8px rgba(26,58,92,0.07);
+  }
+  .tabbar::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0 14px;
+    height: var(--tab-h);
+    font-family: 'Sora', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+  }
+  .tab-btn i { font-size: 13px; }
+  .tab-btn:hover { color: var(--primary); background: var(--highlight); }
+  .tab-btn.active { color: var(--primary); border-bottom-color: var(--accent); }
+
+  /* ── MAIN ── */
+  main { max-width: 880px; margin: 0 auto; padding: 32px 16px 40px; }
+
+  /* ── SECTION ── */
+  section {
+    display: none;
+    animation: fadeUp 0.35s ease;
+  }
+  section.active { display: block; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTION HEADER ── */
+  .sec-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--border);
+  }
+  .sec-icon {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .sec-icon.blue { background: #dbeafe; color: #1d4ed8; }
+  .sec-icon.red  { background: #fee2e2; color: #dc2626; }
+  .sec-icon.green{ background: #dcfce7; color: #16a34a; }
+  .sec-icon.orange{background: #fef3c7; color: #d97706; }
+  .sec-icon.purple{background: #ede9fe; color: #7c3aed; }
+  .sec-title { font-size: 22px; font-weight: 800; color: var(--primary); line-height: 1.2; }
+  .sec-sub { font-size: 13px; color: var(--muted); margin-top: 4px; font-weight: 400; }
+
+  /* ── DEFINITION BOX ── */
+  .def-box {
+    background: linear-gradient(135deg, #eaf3ff 60%, #dbeafe);
+    border-left: 5px solid var(--primary);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 20px 24px;
+    margin: 0 0 24px;
+    font-family: 'Lora', serif;
+    font-size: 15.5px;
+    font-style: italic;
+    color: var(--primary);
+    position: relative;
+  }
+  .def-box::before {
+    content: '\201C';
+    font-size: 64px;
+    color: rgba(26,58,92,0.12);
+    position: absolute;
+    top: -8px; left: 10px;
+    font-family: Georgia, serif;
+    line-height: 1;
+  }
+  .def-box strong { font-style: normal; font-family: 'Sora', sans-serif; }
+  .def-label {
+    display: inline-block;
+    background: var(--primary);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    font-family: 'Sora', sans-serif;
+    font-style: normal;
+    text-transform: uppercase;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 22px 24px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border);
+  }
+  .card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .card-title i { font-size: 16px; }
+
+  /* ── COMPARE GRID (activa/pasiva) ── */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  @media(max-width:560px){ .compare-grid { grid-template-columns: 1fr; } }
+  .cg-item {
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    border: 1.5px solid;
+  }
+  .cg-item.green { border-color: #86efac; background: #f0fdf4; }
+  .cg-item.blue  { border-color: #93c5fd; background: #eff6ff; }
+  .cg-item .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+  .cg-item.green .tag { background: #16a34a; color: #fff; }
+  .cg-item.blue  .tag { background: #1d4ed8; color: #fff; }
+  .cg-item h4 { font-size: 15px; color: var(--primary); margin-bottom: 6px; }
+  .cg-item p  { font-size: 13px; color: var(--muted); }
+  .cg-item ul { font-size: 13px; color: var(--muted); padding-left: 16px; }
+
+  /* ── CALLOUT ── */
+  .callout {
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .callout i { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+  .callout.warn  { background: #fff7e6; border: 1.5px solid #fcd34d; color: #92400e; }
+  .callout.warn i{ color: #f59e0b; }
+  .callout.info  { background: #eaf3ff; border: 1.5px solid #93c5fd; color: #1e3a5f; }
+  .callout.info i{ color: #2563eb; }
+  .callout.danger{ background: #fff0f0; border: 1.5px solid #fca5a5; color: #7f1d1d; }
+  .callout.danger i{ color: #dc2626; }
+  .callout.green { background: #f0fdf4; border: 1.5px solid #86efac; color: #14532d; }
+  .callout.green i{ color: #16a34a; }
+
+  /* ── Q&A BLOCKS ── */
+  .qa-block { margin-bottom: 22px; }
+  .qa-q {
+    background: var(--primary);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 10px 16px;
+    border-radius: var(--radius) var(--radius) 0 0;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .qa-q .q-num {
+    background: var(--accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+    border-radius: 50%;
+    width: 22px; height: 22px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .qa-a {
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 var(--radius) var(--radius);
+    padding: 16px 18px;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  /* ── TABLE ── */
+  .table-wrap { overflow-x: auto; margin: 20px 0; border-radius: var(--radius); box-shadow: var(--shadow); }
+  table { width: 100%; border-collapse: collapse; background: var(--card-bg); font-size: 13px; }
+  thead tr { background: var(--primary); color: #fff; }
+  thead th { padding: 13px 16px; text-align: left; font-size: 12px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+  tbody tr:nth-child(even) { background: #f8fafd; }
+  tbody tr:hover { background: var(--highlight); }
+  tbody td { padding: 12px 16px; vertical-align: top; border-bottom: 1px solid var(--border); }
+  tbody td:first-child { font-weight: 700; color: var(--primary); white-space: nowrap; }
+
+  /* ── ERGONOMY GRID ── */
+  .ergo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 14px;
+    margin: 20px 0;
+  }
+  .ergo-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    border: 1.5px solid var(--border);
+    padding: 16px 18px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    transition: transform 0.18s, box-shadow 0.18s;
+  }
+  .ergo-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+  .ergo-card .ehead {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 10px;
+  }
+  .ergo-card .eicon {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px;
+    flex-shrink: 0;
+  }
+  .ergo-card .etitle { font-size: 13px; font-weight: 700; color: var(--primary); }
+  .ergo-card .edesc { font-size: 12.5px; color: var(--muted); line-height: 1.6; }
+  .ergo-card .eex   { font-size: 12px; color: var(--accent); font-weight: 600; margin-top: 8px; font-style: italic; }
+
+  /* ── TRASTORNOS TABS ── */
+  .tras-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 12px;
+    margin: 20px 0;
+  }
+  @media(max-width:560px){ .tras-grid { grid-template-columns: 1fr; } }
+  .tras-card {
+    border-radius: var(--radius);
+    padding: 18px;
+    border: 1.5px solid;
+    text-align: center;
+  }
+  .tras-card.short  { border-color: #fcd34d; background: #fffbeb; }
+  .tras-card.medium { border-color: #f97316; background: #fff7ed; }
+  .tras-card.long   { border-color: #ef4444; background: #fff0f0; }
+  .tras-card .tlabel{
+    display: inline-block;
+    font-size: 10px; font-weight: 800; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 3px 10px;
+    border-radius: 20px; margin-bottom: 10px;
+  }
+  .tras-card.short  .tlabel { background: #fbbf24; color: #fff; }
+  .tras-card.medium .tlabel { background: #f97316; color: #fff; }
+  .tras-card.long   .tlabel { background: #ef4444; color: #fff; }
+  .tras-card ul { list-style: none; font-size: 12.5px; color: var(--text); text-align: left; }
+  .tras-card ul li::before { content: '▸ '; color: inherit; font-weight: 700; }
+
+  /* ── STRESS CARDS ── */
+  .stress-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 14px;
+    margin: 20px 0;
+  }
+  .stress-card {
+    border-radius: var(--radius);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .stress-card .snum {
+    font-size: 28px; font-weight: 800; color: rgba(0,0,0,0.12); line-height: 1;
+  }
+  .stress-card .stitle { font-size: 13px; font-weight: 700; }
+  .stress-card .sdesc  { font-size: 12.5px; line-height: 1.6; }
+  .sc1 { background: #fff7e6; border: 1.5px solid #fcd34d; }
+  .sc2 { background: #fff0f0; border: 1.5px solid #fca5a5; }
+  .sc3 { background: #fdf4ff; border: 1.5px solid #d8b4fe; }
+  .sc4 { background: #f0f9ff; border: 1.5px solid #7dd3fc; }
+
+  /* ── ZONE MAP ── */
+  .zone-map {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 10px;
+    margin: 24px 0;
+  }
+  @media(max-width:560px){
+    .zone-map { grid-template-columns: 1fr; }
+  }
+  .zone {
+    border-radius: 12px;
+    padding: 14px 16px;
+    border: 2px solid;
+  }
+  .zone.a { border-color: #dc2626; background: #fff0f0; grid-row: 1/3; }
+  .zone.b { border-color: #2563eb; background: #eff6ff; }
+  .zone.c { border-color: #16a34a; background: #f0fdf4; }
+  .zone.d { border-color: #d97706; background: #fffbeb; }
+  .zone-tag {
+    font-size: 10px; font-weight: 800; letter-spacing: 0.1em;
+    text-transform: uppercase; margin-bottom: 6px;
+    display: inline-block; padding: 2px 8px;
+    border-radius: 20px; color: #fff;
+  }
+  .zone.a .zone-tag { background: #dc2626; }
+  .zone.b .zone-tag { background: #2563eb; }
+  .zone.c .zone-tag { background: #16a34a; }
+  .zone.d .zone-tag { background: #d97706; }
+  .zone h4 { font-size: 13px; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+  .zone ul { font-size: 12px; color: var(--muted); list-style: none; }
+  .zone ul li::before { content: '• '; }
+
+  /* ── BADGE ROW ── */
+  .badge-row {
+    display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0;
+  }
+  .badge-item {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--primary);
+    color: #fff;
+    font-size: 12px; font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 20px;
+  }
+  .badge-item i { font-size: 11px; }
+  .badge-item.red    { background: #dc2626; }
+  .badge-item.orange { background: #d97706; }
+  .badge-item.green  { background: #16a34a; }
+  .badge-item.purple { background: #7c3aed; }
+
+  /* ── OBJECTIVES LIST ── */
+  .obj-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin: 12px 0; }
+  .obj-list li {
+    display: flex; gap: 12px; align-items: flex-start;
+    background: var(--highlight);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 13.5px;
+  }
+  .obj-list li i { color: var(--primary); flex-shrink: 0; margin-top: 2px; }
+
+  /* ── PSY LIST ── */
+  .psy-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+  .psy-list li {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    font-size: 13.5px;
+    background: #fff;
+  }
+  .psy-list li i { color: var(--accent); flex-shrink: 0; margin-top: 2px; }
+
+  /* ── SECTION DIVIDER ── */
+  .sdiv {
+    font-size: 11px; font-weight: 800; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--muted);
+    display: flex; align-items: center; gap: 12px;
+    margin: 28px 0 16px;
+  }
+  .sdiv::before, .sdiv::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: var(--footer-h);
+    background: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 1000;
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.15);
+  }
+  footer .ft-left {
+    display: flex; align-items: center; gap: 8px;
+    color: rgba(255,255,255,0.8);
+    font-size: 12px;
+  }
+  footer .ft-left i { color: var(--accent2); }
+  footer a.linkedin-btn {
+    display: flex; align-items: center; gap: 7px;
+    background: #0A66C2;
+    color: #fff;
+    text-decoration: none;
+    font-size: 12px; font-weight: 700;
+    padding: 7px 16px;
+    border-radius: 20px;
+    transition: background 0.2s, transform 0.15s;
+  }
+  footer a.linkedin-btn:hover { background: #094fa3; transform: scale(1.04); }
+  footer a.linkedin-btn i { font-size: 14px; }
+
+  /* ── UTIL ── */
+  p { margin-bottom: 12px; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--primary); }
+  h3 { font-size: 16px; font-weight: 700; color: var(--primary); margin: 20px 0 10px; }
+  h4 { font-size: 14px; font-weight: 700; color: var(--primary); margin: 14px 0 8px; }
+
+  ul.plain { list-style: none; padding: 0; }
+  ul.plain li {
+    padding: 5px 0 5px 22px;
+    font-size: 13.5px;
+    display: block;
+    position: relative;
+    line-height: 1.65;
+  }
+  ul.plain li::before {
+    content: '▸';
+    color: var(--accent);
+    font-weight: 700;
+    position: absolute;
+    left: 0;
+    top: 5px;
+  }
+  ul.dot { padding-left: 18px; }
+  ul.dot li { font-size: 13.5px; margin-bottom: 5px; }
+
+  .highlight-text {
+    background: linear-gradient(120deg, #fef3c7 0%, #fde68a 100%);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-weight: 700;
+    color: #92400e;
+    display: inline;
+  }
+
+  /* intro card */
+  .intro-card {
+    background: linear-gradient(135deg, var(--primary) 0%, #234e7a 100%);
+    border-radius: var(--radius);
+    padding: 28px 28px 24px;
+    color: #fff;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .intro-card::after {
+    content: '';
+    position: absolute;
+    right: -30px; top: -30px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+  }
+  .intro-card h2 { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+  .intro-card p  { font-size: 13.5px; color: rgba(255,255,255,0.8); margin: 0; }
+  .intro-card .inst { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 6px; text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* resolution tag */
+  .res-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 11px; font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="logo">
+    <i class="fas fa-shield-halved"></i>
+    <span>Seguridad Informática</span>
+  </div>
+  <span class="subtitle">Instituto Leonardo Murialdo</span>
+  <div class="spacer"></div>
+  <span class="badge">TP 03</span>
+</nav>
+
+<!-- ── TAB BAR ── -->
+<div class="tabbar">
+  <button class="tab-btn active" onclick="showTab('intro')" id="tab-intro">
+    <i class="fas fa-home"></i> Inicio
+  </button>
+  <button class="tab-btn" onclick="showTab('act1')" id="tab-act1">
+    <i class="fas fa-book"></i> Act. 1 – Conceptos
+  </button>
+  <button class="tab-btn" onclick="showTab('act2')" id="tab-act2">
+    <i class="fas fa-server"></i> Act. 2 – Caso Práctico
+  </button>
+  <button class="tab-btn" onclick="showTab('act3')" id="tab-act3">
+    <i class="fas fa-person"></i> Act. 3 – Ergonomía
+  </button>
+  <button class="tab-btn" onclick="showTab('act4')" id="tab-act4">
+    <i class="fas fa-brain"></i> Act. 4 – Estrés Tech
+  </button>
+</div>
+
+<main>
+
+<!-- ═══════════════════ INICIO ═══════════════════ -->
+<section id="intro" class="active">
+  <div class="intro-card">
+    <h2>Trabajo Práctico 03</h2>
+    <p>Seguridad Física – Parte 02 &nbsp;|&nbsp; Granja de Servidores de IA</p>
+    <p class="inst">Prof. Lourdes Pedaci &nbsp;·&nbsp; Seguridad Informática &nbsp;·&nbsp; 6° Año</p>
+  </div>
+
+  <p style="font-size:14px; color:var(--muted); margin-bottom:20px;">
+    Este trabajo práctico profundiza los conceptos de <strong>Seguridad Física</strong> aplicados a un entorno real: la instalación de una granja de servidores para entrenamiento de modelos de IA. Navegá por las secciones usando la barra superior.
+  </p>
+
+  <div class="card">
+    <div class="card-title"><i class="fas fa-list-check" style="color:var(--accent)"></i> Contenidos</div>
+    <ul class="plain">
+      <li>Actividad 1 – Conceptos: Seguridad Física, Activa y Pasiva</li>
+      <li>Actividad 2 – Caso Práctico: Granja de Servidores de IA (Zonas A–D)</li>
+      <li>Actividad 3 – Ergonomía: disciplina, tipologías, trastornos físicos y psicológicos</li>
+      <li>Actividad 4 – Estrés Tecnológico: causas, efectos y soluciones</li>
+    </ul>
+  </div>
+
+  <div class="callout info">
+    <i class="fas fa-lightbulb"></i>
+    <div>Las <strong>definiciones base</strong> de cada sección están destacadas con el bloque azul de cita. Son la base conceptual sobre la que se construyen todas las respuestas.</div>
+  </div>
+</section>
+
+<!-- ═══════════════════ ACT. 1 ═══════════════════ -->
+<section id="act1">
+  <div class="sec-header">
+    <div class="sec-icon blue"><i class="fas fa-book-open"></i></div>
+    <div>
+      <div class="sec-title">Actividad 1 – Conceptos Clave</div>
+      <div class="sec-sub">Seguridad Física · Seguridad Activa · Seguridad Pasiva</div>
+    </div>
+  </div>
+
+  <!-- Seguridad Física -->
+  <div class="def-box">
+    <span class="def-label">Definición</span><br>
+    La <strong>Seguridad Física</strong> consiste en la "aplicación de barreras físicas y procedimientos de control, como medidas de prevención y contramedidas ante amenazas a los recursos e información confidencial". Incluye los controles y mecanismos dentro y alrededor del Centro de Cómputo que protegen el hardware y los medios de almacenamiento de datos.
+  </div>
+
+  <p>La Seguridad Física es el <strong>primer eslabón</strong> de cualquier sistema de seguridad informática. No importa qué tan avanzado sea el software de protección: si no se ha previsto cómo combatir un incendio o proteger el acceso físico a los equipos, la seguridad del sistema es nula.</p>
+
+  <p>Las amenazas físicas incluyen: desastres naturales (incendios, inundaciones, terremotos), robos y sabotajes, y fallos de suministro eléctrico.</p>
+
+  <div class="sdiv">Diferencia con Seguridad Activa y Pasiva</div>
+
+  <div class="compare-grid">
+    <div class="cg-item green">
+      <span class="tag">Seguridad Activa</span>
+      <h4><i class="fas fa-shield-halved"></i> Prevención y Detección</h4>
+      <p>Agrupa todos los mecanismos y procedimientos que permiten <strong>prevenir y detectar</strong> riesgos antes de que ocurran. Se aplica tanto a la parte física como a la lógica del sistema.</p>
+      <ul>
+        <li>Control de acceso biométrico</li>
+        <li>Cámaras de vigilancia (CCTV)</li>
+        <li>Alarmas contra intrusos</li>
+        <li>Instalación eléctrica certificada</li>
+        <li>Detectores de humo y temperatura</li>
+      </ul>
+    </div>
+    <div class="cg-item blue">
+      <span class="tag">Seguridad Pasiva</span>
+      <h4><i class="fas fa-wrench"></i> Corrección y Recuperación</h4>
+      <p>Conjunto de medidas de <strong>corrección</strong> que minimizan el impacto de un incidente ya ocurrido y permiten la recuperación del sistema.</p>
+      <ul>
+        <li>Extintores de incendio</li>
+        <li>Seguros y pólizas</li>
+        <li>Copias de seguridad (backups)</li>
+        <li>Redundancia de hardware</li>
+        <li>Plan de contingencias</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout info">
+    <i class="fas fa-circle-info"></i>
+    <div>En resumen: la <strong>Seguridad Activa previene</strong>, la <strong>Seguridad Pasiva repara</strong>. La Seguridad Física es el marco que contiene a ambas en lo referido al entorno físico y al hardware.</div>
+  </div>
+</section>
+
+<!-- ═══════════════════ ACT. 2 ═══════════════════ -->
+<section id="act2">
+  <div class="sec-header">
+    <div class="sec-icon red"><i class="fas fa-server"></i></div>
+    <div>
+      <div class="sec-title">Actividad 2 – Caso Práctico</div>
+      <div class="sec-sub">Granja de Servidores para Entrenamiento de IA</div>
+    </div>
+  </div>
+
+  <!-- CASO -->
+  <div class="card" style="border-left: 4px solid var(--accent);">
+    <div class="card-title"><i class="fas fa-building" style="color:var(--accent)"></i> Descripción del Local</div>
+    <p style="font-size:13.5px; color:var(--muted); margin-bottom:16px;">Carlos es contratado para adecuar un local donde funcionará una pequeña granja de servidores para entrenamiento de modelos de IA. El local se divide en:</p>
+    <!-- FLOORPLAN SVG -->
+    <div style="overflow-x:auto; margin: 20px 0;">
+      <svg viewBox="0 0 700 460" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:700px; display:block; margin:0 auto; font-family:'Sora',sans-serif;">
+
+        <!-- Outer wall -->
+        <rect x="10" y="10" width="680" height="400" rx="4" fill="#f8f9fa" stroke="#1e2a38" stroke-width="4"/>
+
+        <!-- ── ZONA C (rojo): Búnker de Servidores – arriba izquierda ── -->
+        <rect x="10" y="10" width="220" height="200" rx="0" fill="#fff0ee" stroke="#c0392b" stroke-width="2.5"/>
+        <!-- label -->
+        <text x="120" y="38" text-anchor="middle" font-size="9" font-weight="800" fill="#c0392b" letter-spacing="1">ZONA C</text>
+        <text x="120" y="52" text-anchor="middle" font-size="8.5" fill="#7f1d1d">Área de Café y</text>
+        <text x="120" y="63" text-anchor="middle" font-size="8.5" fill="#7f1d1d">Soporte Técnico</text>
+        <!-- coffee icon area -->
+        <text x="120" y="100" text-anchor="middle" font-size="28" fill="#c0392b" opacity="0.25">☕</text>
+        <!-- items -->
+        <text x="120" y="130" text-anchor="middle" font-size="8" fill="#7f1d1d">• Espacio de soporte</text>
+        <text x="120" y="143" text-anchor="middle" font-size="8" fill="#7f1d1d">• Impresoras</text>
+        <text x="120" y="156" text-anchor="middle" font-size="8" fill="#7f1d1d">• Cafetería</text>
+
+        <!-- ── ZONA A (azul): Hub Desarrolladores – centro ── -->
+        <rect x="240" y="30" width="220" height="220" rx="0" fill="#eff6ff" stroke="#1d4ed8" stroke-width="2.5"/>
+        <text x="350" y="58" text-anchor="middle" font-size="9" font-weight="800" fill="#1d4ed8" letter-spacing="1">ZONA A</text>
+        <text x="350" y="72" text-anchor="middle" font-size="8.5" fill="#1e3a8a">Búnker de Servidores</text>
+        <text x="350" y="83" text-anchor="middle" font-size="8" fill="#1e3a8a">(Acceso Restringido)</text>
+        <!-- server rack icon -->
+        <rect x="295" y="95" width="110" height="70" rx="4" fill="#1d4ed8" opacity="0.08" stroke="#1d4ed8" stroke-width="1"/>
+        <text x="350" y="118" text-anchor="middle" font-size="22" fill="#1d4ed8" opacity="0.35">🖥</text>
+        <text x="350" y="158" text-anchor="middle" font-size="8" fill="#1e3a8a">• Cristal blindado</text>
+        <text x="350" y="171" text-anchor="middle" font-size="8" fill="#1e3a8a">• Rack de alta densidad</text>
+        <text x="350" y="184" text-anchor="middle" font-size="8" fill="#1e3a8a">• UPS industrial</text>
+        <text x="350" y="197" text-anchor="middle" font-size="8" fill="#1e3a8a">• Servidor principal</text>
+        <!-- Restricted badge -->
+        <rect x="298" y="220" width="104" height="18" rx="9" fill="#1d4ed8"/>
+        <text x="350" y="232" text-anchor="middle" font-size="8" font-weight="700" fill="white" letter-spacing="0.5">🔒 RESTRINGIDO</text>
+
+        <!-- ── ZONA B (verde): Hub Desarrolladores – derecha ── -->
+        <rect x="470" y="10" width="220" height="400" rx="0" fill="#f0fdf4" stroke="#16a34a" stroke-width="2.5"/>
+        <text x="580" y="38" text-anchor="middle" font-size="9" font-weight="800" fill="#16a34a" letter-spacing="1">ZONA B</text>
+        <text x="580" y="52" text-anchor="middle" font-size="8.5" fill="#14532d">Hub de Desarrolladores</text>
+        <text x="580" y="63" text-anchor="middle" font-size="8" fill="#14532d">(Estaciones de Trabajo)</text>
+        <!-- Workstations grid 2x5 -->
+        <!-- row 1 -->
+        <rect x="490" y="75"  width="42" height="30" rx="3" fill="white" stroke="#16a34a" stroke-width="1.5"/>
+        <rect x="548" y="75"  width="42" height="30" rx="3" fill="white" stroke="#16a34a" stroke-width="1.5"/>
+        <!-- row 2 -->
+        <rect x="490" y="115" width="42" height="30" rx="3" fill="white" stroke="#16a34a" stroke-width="1.5"/>
+        <rect x="548" y="115" width="42" height="30" rx="3" fill="white" stroke="#16a34a" stroke-width="1.5"/>
+        <!-- row 3 -->
+        <rect x="490" y="155" width="42" height="30" rx="3" fill="white" stroke="#16a34a" stroke-width="1.5"/>
+        <rect x="548" y="155" width="42" height="30" rx="3" fill="white" stroke="#16a34a" stroke-width="1.5"/>
+        <!-- row 4 -->
+        <rect x="490" y="195" width="42" height="30" rx="3" fill="white" stroke="#16a34a" stroke-width="1.5"/>
+        <rect x="548" y="195" width="42" height="30" rx="3" fill="white" stroke="#16a34a" stroke-width="1.5"/>
+        <!-- row 5 -->
+        <rect x="490" y="235" width="42" height="30" rx="3" fill="white" stroke="#16a34a" stroke-width="1.5"/>
+        <rect x="548" y="235" width="42" height="30" rx="3" fill="white" stroke="#16a34a" stroke-width="1.5"/>
+        <!-- labels under workstations -->
+        <text x="580" y="285" text-anchor="middle" font-size="7.5" fill="#14532d">10 estaciones de trabajo</text>
+        <text x="580" y="310" text-anchor="middle" font-size="7.5" fill="#14532d">• Impresora 3D en red</text>
+        <text x="580" y="323" text-anchor="middle" font-size="7.5" fill="#14532d">• Estación de café</text>
+
+        <!-- ── ZONA D (gris): Sanitarios – abajo izquierda ── -->
+        <rect x="10" y="310" width="220" height="100" rx="0" fill="#f3f4f6" stroke="#9ca3af" stroke-width="2"/>
+        <text x="120" y="334" text-anchor="middle" font-size="9" font-weight="800" fill="#6b7280" letter-spacing="1">ZONA D</text>
+        <text x="120" y="347" text-anchor="middle" font-size="8.5" fill="#6b7280">Servicios</text>
+        <!-- Two bathroom boxes -->
+        <rect x="30"  y="360" width="75" height="38" rx="3" fill="white" stroke="#9ca3af" stroke-width="1.5"/>
+        <text x="67"  y="382" text-anchor="middle" font-size="8" fill="#6b7280">Baños</text>
+        <rect x="125" y="360" width="75" height="38" rx="3" fill="white" stroke="#9ca3af" stroke-width="1.5"/>
+        <text x="162" y="382" text-anchor="middle" font-size="8" fill="#6b7280">Depósito</text>
+
+        <!-- ── Middle corridor between C/D and A (white space) ── -->
+        <!-- just empty, already white from outer rect -->
+
+        <!-- ── LEGEND ── -->
+        <g transform="translate(10, 428)">
+          <!-- legend items -->
+          <rect x="0"   y="0" width="12" height="10" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1.5"/>
+          <text x="16" y="9" font-size="8" fill="#1e2a38">Zona A: Búnker de Servidores (Acceso Restringido)</text>
+
+          <rect x="230" y="0" width="12" height="10" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+          <text x="246" y="9" font-size="8" fill="#1e2a38">Zona B: Hub de Desarrolladores</text>
+
+          <rect x="430" y="0" width="12" height="10" fill="#fff0ee" stroke="#c0392b" stroke-width="1.5"/>
+          <text x="446" y="9" font-size="8" fill="#1e2a38">Zona C: Café y Soporte Técnico</text>
+
+          <rect x="0"   y="16" width="12" height="10" fill="#f3f4f6" stroke="#9ca3af" stroke-width="1.5"/>
+          <text x="16" y="25" font-size="8" fill="#1e2a38">Zona D: Sanitarios y Depósito</text>
+        </g>
+
+      </svg>
+    </div>
+  </div>
+
+  <!-- SITUACIÓN 1 -->
+  <div class="sdiv"><i class="fas fa-bolt"></i> Situación 1 – Electricidad sin Toma de Tierra</div>
+
+  <div class="qa-block">
+    <div class="qa-q">
+      <span class="q-num">a</span>
+      ¿Por qué es vital la toma de tierra en un entorno con servidores de IA?
+    </div>
+    <div class="qa-a">
+      <p>Una granja de servidores de IA consume <strong>mucha más energía</strong> que una oficina común: los servidores de alto rendimiento, el rack de alta densidad y el UPS industrial generan picos de corriente constantes. Sin toma de tierra:</p>
+      <ul class="plain">
+        <li>Las corrientes de fuga y los picos de tensión no tienen por dónde disiparse y terminan atravesando los componentes electrónicos, <strong>destruyendo placas, discos y memorias</strong>.</li>
+        <li>Los modelos de IA en entrenamiento pueden <strong>corromperse o perderse irreversiblemente</strong> si hay un corte o pico durante el proceso.</li>
+        <li>Las carcasas metálicas con fuga de corriente pueden <strong>electrocutar al personal</strong>.</li>
+        <li>Los rayos e interferencias electromagnéticas externas tampoco tendrían protección.</li>
+      </ul>
+      <div class="callout danger" style="margin-top:12px; margin-bottom:0;">
+        <i class="fas fa-triangle-exclamation"></i>
+        <div>Sin toma de tierra, <strong>cualquier pico eléctrico es un riesgo directo</strong> para los equipos y las personas.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="qa-block">
+    <div class="qa-q">
+      <span class="q-num">b</span>
+      Recomendación urgente antes de enchufar un solo equipo
+    </div>
+    <div class="qa-a">
+      <p>Carlos debe indicar que <strong>ningún equipo puede conectarse</strong> hasta que un electricista matriculado instale la toma de tierra con <span class="highlight-text">jabalina</span> (varilla conductora enterrada). Además recomienda:</p>
+      <ul class="plain">
+        <li>Instalar un <strong>estabilizador de tensión</strong> entre la red y el UPS para filtrar picos.</li>
+        <li>Verificar que el <strong>UPS industrial</strong> esté correctamente conectado a tierra.</li>
+        <li>Realizar una <strong>inspección eléctrica completa</strong> antes de la puesta en marcha.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SITUACIÓN 2 -->
+  <div class="sdiv"><i class="fas fa-droplet"></i> Situación 2 – Agua e Inundaciones</div>
+
+  <div class="qa-block">
+    <div class="qa-q">
+      <span class="q-num">a</span>
+      ¿Existe riesgo de inundación por agentes externos (lluvia/tormenta)?
+    </div>
+    <div class="qa-a">
+      <p>El riesgo es <strong>bajo pero no nulo</strong>. Las ventanas fijas y las rejillas en los baños son puntos positivos. Sin embargo:</p>
+      <ul class="plain">
+        <li>Las ventanas fijas evitan la entrada de lluvia, pero no protegen ante <strong>filtraciones por grietas</strong> en paredes o techo.</li>
+        <li>Las canaletas externas pueden <strong>desbordarse</strong> en tormentas fuertes.</li>
+        <li>La Zona D (baños) tiene tuberías que, aunque no pasan por los muros de la Zona A, ante una rotura podrían generar <strong>humedad que se filtre</strong> hacia otras zonas.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-block">
+    <div class="qa-q">
+      <span class="q-num">b</span>
+      ¿Por qué Carlos prohíbe colocar equipos y UPS directamente sobre el suelo?
+    </div>
+    <div class="qa-a">
+      <p>Ante cualquier filtración mínima, el agua corre por gravedad y se acumula en el punto más bajo: el <strong>suelo</strong>. Si los equipos están ahí:</p>
+      <ul class="plain">
+        <li>El agua entra en fuentes de alimentación y componentes, causando <strong>cortocircuitos inmediatos</strong>.</li>
+        <li>El UPS industrial mojado puede <strong>explotar o generar un incendio eléctrico</strong>.</li>
+      </ul>
+      <div class="callout green" style="margin-top:12px; margin-bottom:0;">
+        <i class="fas fa-check-circle"></i>
+        <div>Los servidores deben estar <strong>montados en el rack</strong> y el UPS sobre una <strong>plataforma elevada o base antihumedad</strong>.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SITUACIÓN 3 -->
+  <div class="sdiv"><i class="fas fa-temperature-half"></i> Situación 3 – Temperatura y Extintor</div>
+
+  <div class="qa-block">
+    <div class="qa-q">
+      <span class="q-num">a</span>
+      ¿Cuál es la temperatura ideal para hardware y personas conviviendo?
+    </div>
+    <div class="qa-a">
+      <p>La temperatura recomendada para un entorno mixto está entre <span class="highlight-text">18°C y 23°C</span>, con humedad relativa entre 40% y 60%.</p>
+      <ul class="plain">
+        <li>Por <strong>debajo de 18°C</strong>: las personas trabajan incómodas y la condensación puede dañar componentes.</li>
+        <li>Por <strong>encima de 23°C</strong>: los procesadores de los servidores de IA (al 100% durante el entrenamiento) sufren <span class="highlight-text">throttling</span>: reducen automáticamente su velocidad para no quemarse.</li>
+        <li>La <strong>Zona A</strong> debería tener su propio sistema de refrigeración diferenciado, ya que el rack de alta densidad genera calor extremo concentrado.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-block">
+    <div class="qa-q">
+      <span class="q-num">b</span>
+      ¿Qué tipo de extintor debe haber en la Zona A ante un cortocircuito en el rack?
+    </div>
+    <div class="qa-a">
+      <div class="badge-row">
+        <span class="badge-item green"><i class="fas fa-check"></i> CO₂ (Dióxido de carbono)</span>
+        <span class="badge-item green"><i class="fas fa-check"></i> Gas inerte (INERGEN / Nitrógeno)</span>
+        <span class="badge-item red"><i class="fas fa-xmark"></i> Agua</span>
+        <span class="badge-item red"><i class="fas fa-xmark"></i> Polvo químico</span>
+      </div>
+      <ul class="plain" style="margin-top:12px;">
+        <li><strong>NO agua</strong>: conduce la electricidad → electrocuta al operador y destruye los equipos.</li>
+        <li><strong>NO polvo químico</strong>: penetra en los componentes, los obstruye y los inutiliza permanentemente.</li>
+        <li><strong>SÍ CO₂ / gas inerte</strong>: sofoca el fuego desplazando el oxígeno, sin dejar residuos ni conducir electricidad.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SITUACIÓN 4 -->
+  <div class="sdiv"><i class="fas fa-lock"></i> Situación 4 – Otras Medidas de Seguridad</div>
+
+  <div class="qa-block">
+    <div class="qa-q">
+      <span class="q-num">a</span>
+      ¿Se debería contar con un extintor de incendios? ¿De qué tipo?
+    </div>
+    <div class="qa-a">
+      <p><strong>Sí, obligatoriamente.</strong> El tipo varía según la zona:</p>
+      <ul class="plain">
+        <li><strong>Zona A (Búnker):</strong> extintor tipo C – CO₂ o gas inerte, para incendios eléctricos.</li>
+        <li><strong>Zonas B y C:</strong> extintor tipo A o B para materiales sólidos o líquidos inflamables (cafetería, materiales de oficina).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-block">
+    <div class="qa-q">
+      <span class="q-num">b</span>
+      ¿Se debe restringir el acceso de personas al local y a la sala de gestión?
+    </div>
+    <div class="qa-a">
+      <p><strong>Sí, con diferentes niveles según la zona:</strong></p>
+      <ul class="plain">
+        <li><strong>Zona A:</strong> acceso exclusivo para personal técnico autorizado con <span class="highlight-text">biometría o tarjeta de proximidad</span>. Nadie más debe entrar.</li>
+        <li><strong>Zona B:</strong> acceso para desarrolladores registrados con tarjeta.</li>
+        <li><strong>Zonas C y D:</strong> acceso general del personal.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-block">
+    <div class="qa-q">
+      <span class="q-num">c</span>
+      ¿Se debería instalar una alarma? ¿De una o más zonas activables?
+    </div>
+    <div class="qa-a">
+      <p>Sí, obligatoriamente de <span class="highlight-text">múltiples zonas activables</span>, porque cada zona tiene diferente nivel de sensibilidad:</p>
+      <ul class="plain">
+        <li>La <strong>Zona A</strong> puede permanecer activa 24/7 con detección de movimiento, humo y temperatura.</li>
+        <li>Las <strong>Zonas B y C</strong> se arman fuera del horario laboral.</li>
+        <li>Una alarma de una sola zona no permite esta diferenciación y sería ineficiente.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- TABLA -->
+  <div class="sdiv"><i class="fas fa-table"></i> Tabla de Tipologías de Riesgo</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Tipología</th>
+          <th>Causas que los producen</th>
+          <th>Modalidades de reducción/prevención</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><i class="fas fa-plug" style="color:#2563eb"></i> Problemas de Cableado</td>
+          <td>Instalación eléctrica antigua y sin toma de tierra, picos de tensión, alto consumo del rack de IA, falta de mantenimiento.</td>
+          <td>Toma de tierra con jabalina, estabilizador de tensión, UPS/SAI industrial, cableado certificado para alta carga, grupo electrógeno de respaldo.</td>
+        </tr>
+        <tr>
+          <td><i class="fas fa-droplet" style="color:#0ea5e9"></i> Inundaciones / Humedad</td>
+          <td>Filtración por grietas, rotura de tuberías en Zona D, humedad ambiental, condensación por cambios de temperatura.</td>
+          <td>Rejillas de desagüe, equipos elevados del suelo (en racks y pedestales), deshumidificadores, membranas impermeables, prohibir líquidos en Zonas A y B.</td>
+        </tr>
+        <tr>
+          <td><i class="fas fa-fire" style="color:#dc2626"></i> Ventilación / Sobrecalentamiento / Incendios</td>
+          <td>Rack de alta densidad con calor extremo, AC insuficiente, cortocircuitos en la instalación eléctrica, estación de café en Zona B.</td>
+          <td>AC central + unidad independiente para Zona A, sensores de temperatura, detectores de humo, extintores CO₂ en Zona A, puertas cortafuego, plan de evacuación.</td>
+        </tr>
+        <tr>
+          <td><i class="fas fa-wind" style="color:#d97706"></i> Polvo / Electroestática</td>
+          <td>Apertura constante de puertas, materiales del depósito (Zona D), impresora 3D genera partículas en Zona B.</td>
+          <td>Filtros antipolvo en entrada de Zona A, limpieza periódica de racks, pulseras antiestáticas para personal técnico, separar físicamente la impresora 3D.</td>
+        </tr>
+        <tr>
+          <td><i class="fas fa-lock" style="color:#7c3aed"></i> Restricciones de Acceso</td>
+          <td>Acceso no controlado a Zona A con servidor principal, riesgo de robo de hardware o datos de entrenamiento de IA.</td>
+          <td>Biometría o tarjeta de proximidad para Zona A, tarjeta para Zona B, alarma multizonal, CCTV (cámaras IP), registro de ingresos y egresos.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════════════ ACT. 3 ═══════════════════ -->
+<section id="act3">
+  <div class="sec-header">
+    <div class="sec-icon orange"><i class="fas fa-person-chalkboard"></i></div>
+    <div>
+      <div class="sec-title">Actividad 3 – Ergonomía y Trastornos</div>
+      <div class="sec-sub">Disciplina científica · Tipologías · Trastornos físicos y psicológicos</div>
+    </div>
+  </div>
+
+  <!-- 3.a ERGONOMÍA -->
+  <div class="sdiv"><i class="fas fa-a"></i> 3.a – La Ergonomía</div>
+
+  <div class="def-box">
+    <span class="def-label">Definición</span><br>
+    "La <strong>Ergonomía</strong> es una disciplina que se ocupa de estudiar la forma en que interactúa el cuerpo humano con los artefactos y elementos que lo rodean, buscando que esa interacción sea lo menos agresiva y traumática posible."
+    <br><small style="font-style:normal; font-family:'Sora',sans-serif; font-size:11px; color:var(--muted); display:block; margin-top:8px;">— Aldegani, Gustavo M. Seguridad Informática. MP Ediciones, 1997.</small>
+  </div>
+
+  <p>El <strong>enfoque ergonómico</strong> plantea la adaptación de los métodos, objetos, maquinarias, herramientas y condiciones de trabajo a la anatomía, fisiología y psicología del operador. Su fin es proteger a los trabajadores contra el agotamiento, las sobrecargas y el envejecimiento prematuro.</p>
+
+  <h3><i class="fas fa-bullseye" style="color:var(--accent2)"></i> Objetivos de la Ergonomía</h3>
+  <ul class="obj-list">
+    <li><i class="fas fa-magnifying-glass"></i> Identificar, analizar y reducir los riesgos laborales ergonómicos y psicosociales.</li>
+    <li><i class="fas fa-chair"></i> Adaptar el puesto de trabajo y las condiciones laborales a las características del operador.</li>
+    <li><i class="fas fa-gears"></i> Controlar la introducción de nuevas tecnologías y su adaptación a las capacidades de las personas.</li>
+    <li><i class="fas fa-toolbox"></i> Establecer prescripciones ergonómicas para la adquisición de herramientas y materiales.</li>
+    <li><i class="fas fa-heart"></i> Aumentar la motivación y la satisfacción en el trabajo.</li>
+    <li><i class="fas fa-chart-line"></i> Contribuir a la evolución de las situaciones de trabajo, considerando aspectos socio-organizativos.</li>
+  </ul>
+
+  <h3><i class="fas fa-sitemap" style="color:var(--accent2)"></i> Tipologías Ergonómicas</h3>
+  <div class="ergo-grid">
+    <div class="ergo-card">
+      <div class="ehead">
+        <div class="eicon" style="background:#fef3c7; color:#d97706;"><i class="fas fa-clock"></i></div>
+        <div class="etitle">Ergonomía Temporal</div>
+      </div>
+      <div class="edesc">Estudia los tiempos de trabajo, pausas, jornadas y descansos para evitar fatiga física y mental.</div>
+      <div class="eex">Ej: Pausas de 10 min cada 50 min frente a pantalla.</div>
+    </div>
+    <div class="ergo-card">
+      <div class="ehead">
+        <div class="eicon" style="background:#eff6ff; color:#2563eb;"><i class="fas fa-ruler-combined"></i></div>
+        <div class="etitle">Ergonomía Geométrica</div>
+      </div>
+      <div class="edesc">Analiza la relación entre el cuerpo y las métricas del puesto: altura de mesas, asientos, postura.</div>
+      <div class="eex">Ej: Regular silla para que los pies apoyen en el suelo.</div>
+    </div>
+    <div class="ergo-card">
+      <div class="ehead">
+        <div class="eicon" style="background:#f0fdf4; color:#16a34a;"><i class="fas fa-microchip"></i></div>
+        <div class="etitle">Ergonomía Cognitiva</div>
+      </div>
+      <div class="edesc">Analiza cómo el cerebro procesa información al interactuar con máquinas. Se aplica al diseño de interfaces.</div>
+      <div class="eex">Ej: Diseñar software con menús claros y sin sobrecarga mental.</div>
+    </div>
+    <div class="ergo-card">
+      <div class="ehead">
+        <div class="eicon" style="background:#fdf4ff; color:#7c3aed;"><i class="fas fa-sun"></i></div>
+        <div class="etitle">Ergonomía Ambiental</div>
+      </div>
+      <div class="edesc">Estudia las condiciones físicas del entorno: iluminación, temperatura, ruido y vibraciones.</div>
+      <div class="eex">Ej: Persianas para evitar reflejo del sol en las pantallas.</div>
+    </div>
+    <div class="ergo-card">
+      <div class="ehead">
+        <div class="eicon" style="background:#fff0f0; color:#dc2626;"><i class="fas fa-bone"></i></div>
+        <div class="etitle">Ergonomía Biomecánica</div>
+      </div>
+      <div class="edesc">Estudia el cuerpo desde la mecánica y la biología para prevenir lesiones musculoesqueléticas.</div>
+      <div class="eex">Ej: Teclado ergonómico para reducir tensión en muñecas.</div>
+    </div>
+    <div class="ergo-card">
+      <div class="ehead">
+        <div class="eicon" style="background:#f0f9ff; color:#0ea5e9;"><i class="fas fa-wheelchair"></i></div>
+        <div class="etitle">Ergonomía de Nec. Específicas</div>
+      </div>
+      <div class="edesc">Diseña equipos y ambientes para personas con discapacidad o condiciones particulares.</div>
+      <div class="eex">Ej: Adaptar puesto para usuario en silla de ruedas.</div>
+    </div>
+    <div class="ergo-card">
+      <div class="ehead">
+        <div class="eicon" style="background:#fff7ed; color:#f97316;"><i class="fas fa-pencil-ruler"></i></div>
+        <div class="etitle">Ergonomía de Diseño y Evaluación</div>
+      </div>
+      <div class="edesc">Reduce el esfuerzo y estrés mediante el diseño adecuado de equipos y espacios de trabajo.</div>
+      <div class="eex">Ej: Disposición de monitores en call center para maximizar confort.</div>
+    </div>
+    <div class="ergo-card">
+      <div class="ehead">
+        <div class="eicon" style="background:#dcfce7; color:#16a34a;"><i class="fas fa-shield"></i></div>
+        <div class="etitle">Ergonomía Preventiva</div>
+      </div>
+      <div class="edesc">Analiza condiciones de seguridad y salud antes de que se produzca una lesión.</div>
+      <div class="eex">Ej: Evaluar si el ruido de ventiladores supera los 55 dB.</div>
+    </div>
+  </div>
+
+  <!-- 3.b TRASTORNOS FÍSICOS -->
+  <div class="sdiv"><i class="fas fa-b"></i> 3.b – Trastornos Físicos por Uso de Tecnología</div>
+
+  <div class="card">
+    <div class="card-title"><i class="fas fa-hand" style="color:#dc2626"></i> Trastornos Óseos y/o Musculares</div>
+    <p>La operación del teclado es un movimiento <strong>repetitivo y continuo</strong>. Sumado al diseño antinatural de muchos teclados y la falta de movimientos alternativos, existe riesgo de lesiones en músculos, nervios y huesos de manos y brazos. El puesto de trabajo debe ser <strong>ajustable</strong> para que cada usuario adopte la posición más natural posible.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><i class="fas fa-eye" style="color:#2563eb"></i> Trastornos Visuales</div>
+    <p>Los ojos son las partes <strong>más afectadas</strong> por el trabajo con computadoras. La pantalla es una fuente de luz que incide directamente sobre el ojo del operador, provocando: cansancio visual, irritación, lagrimeo, cefalea y visión borrosa. Para prevenirlos: elegir monitores de calidad, usar pantallas antirreflejo, respetar pausas visuales.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><i class="fas fa-thermometer-half" style="color:#f97316"></i> Ambiente Climático</div>
+    <p>La temperatura de una oficina con computadoras debe estar entre <strong>18°C y 21°C</strong> y la humedad relativa entre <strong>45% y 65%</strong>. Los equipos no deben superar los <strong>55 decibeles</strong> para no afectar la salud auditiva.</p>
+  </div>
+
+  <h4>Clasificación por plazo</h4>
+  <div class="tras-grid">
+    <div class="tras-card short">
+      <span class="tlabel">Corto Plazo</span>
+      <ul>
+        <li>Tensión muscular en cuello y hombros</li>
+        <li>Calambres en manos</li>
+        <li>Entumecimiento</li>
+        <li>Cansancio visual</li>
+        <li>Irritación ocular</li>
+        <li>Cefalea</li>
+      </ul>
+    </div>
+    <div class="tras-card medium">
+      <span class="tlabel">Mediano Plazo</span>
+      <ul>
+        <li>Tendinitis</li>
+        <li>Síndrome del túnel carpiano</li>
+        <li>Contracturas crónicas</li>
+        <li>Problemas posturales</li>
+        <li>Visión borrosa frecuente</li>
+      </ul>
+    </div>
+    <div class="tras-card long">
+      <span class="tlabel">Largo Plazo</span>
+      <ul>
+        <li>Lesiones musculoesqueléticas permanentes</li>
+        <li>Hernias cervicales o lumbares</li>
+        <li>Desgaste articular</li>
+        <li>Daños visuales crónicos</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 3.c TRASTORNOS PSICOLÓGICOS -->
+  <div class="sdiv"><i class="fas fa-c"></i> 3.c – Trastornos Psicológicos</div>
+
+  <div class="def-box" style="background: linear-gradient(135deg,#fdf4ff 60%,#ede9fe); border-left-color: #7c3aed;">
+    <span class="def-label" style="background:#7c3aed;">Contexto</span><br>
+    Los trastornos psicológicos son consecuencia de la <strong>hiperconectividad</strong>, la <strong>sobrecarga de información</strong> y la <strong>dependencia tecnológica</strong> que caracteriza el mundo digital actual. Afectan a personas de todas las edades.
+  </div>
+
+  <ul class="psy-list">
+    <li><i class="fas fa-circle-exclamation"></i><div><strong>Ansiedad generalizada</strong> ante la incapacidad de desconectarse o responder a tiempo.</div></li>
+    <li><i class="fas fa-face-sad-tear"></i><div><strong>Depresión</strong> vinculada al aislamiento social que genera el uso excesivo de pantallas.</div></li>
+    <li><i class="fas fa-moon"></i><div><strong>Pesadillas y trastornos del sueño</strong> por exposición a luz azul y hiperconectividad nocturna.</div></li>
+    <li><i class="fas fa-mobile-screen"></i><div><strong>Nomofobia</strong> (miedo irracional a no tener el celular) y <strong>Síndrome FOMO</strong> (Fear Of Missing Out).</div></li>
+    <li><i class="fas fa-fire-flame-curved"></i><div><strong>Agresividad y estrés permanente</strong> ante interrupciones tecnológicas o sobrecarga de notificaciones.</div></li>
+    <li><i class="fas fa-heart-crack"></i><div><strong>Pérdida de autoestima</strong> relacionada con comparaciones en redes sociales.</div></li>
+    <li><i class="fas fa-ban"></i><div><strong>Bloqueos emocionales</strong> ante la saturación de información digital.</div></li>
+    <li><i class="fas fa-person-walking-arrow-right"></i><div><strong>Aislamiento y ausentismo laboral</strong> como consecuencia de conflictos no resueltos en el entorno tecnológico.</div></li>
+  </ul>
+</section>
+
+<!-- ═══════════════════ ACT. 4 ═══════════════════ -->
+<section id="act4">
+  <div class="sec-header">
+    <div class="sec-icon purple"><i class="fas fa-brain"></i></div>
+    <div>
+      <div class="sec-title">Actividad 4 – Estrés Tecnológico</div>
+      <div class="sec-sub">Causas · Efectos · Resolución</div>
+    </div>
+  </div>
+
+  <div class="def-box" style="background: linear-gradient(135deg,#fdf4ff 60%,#ede9fe); border-left-color: #7c3aed;">
+    <span class="def-label" style="background:#7c3aed;">Definición</span><br>
+    El <strong>estrés informático</strong> se ha convertido en una nueva enfermedad profesional relacionada con el trabajo, provocada por la <strong>carga mental y psíquica inherente a la operación con los nuevos equipos</strong>.
+  </div>
+
+  <div class="callout info">
+    <i class="fas fa-circle-question"></i>
+    <div><strong>¿Existe el estrés tecnológico?</strong> Sí. Es reconocido como una enfermedad profesional emergente que afecta tanto a trabajadores como a usuarios cotidianos de tecnología en todas sus etapas de vida.</div>
+  </div>
+
+  <div class="sdiv"><i class="fas fa-arrow-trend-up"></i> ¿Cómo se produce? – Efectos en 4 categorías</div>
+
+  <div class="stress-grid">
+    <div class="stress-card sc1">
+      <div class="snum">01</div>
+      <div class="stitle">Efectos Fisiológicos Inmediatos</div>
+      <div class="sdesc">Incremento de la presión arterial, aumento de la frecuencia cardíaca, tensión muscular generalizada.</div>
+    </div>
+    <div class="stress-card sc2">
+      <div class="snum">02</div>
+      <div class="stitle">Efectos Psicológicos Inmediatos</div>
+      <div class="sdesc">Tensión, irritabilidad, cólera, agresividad. Pueden inducir consumo de alcohol, psicofármacos o el hábito de fumar.</div>
+    </div>
+    <div class="stress-card sc3">
+      <div class="snum">03</div>
+      <div class="stitle">Consecuencias Médicas a Largo Plazo</div>
+      <div class="sdesc">Enfermedades coronarias, hipertensión arterial, úlceras pépticas, agotamiento crónico. Psicológicas: neurosis, insomnio, ansiedad y depresión crónicas.</div>
+    </div>
+    <div class="stress-card sc4">
+      <div class="snum">04</div>
+      <div class="stitle">Consecuencias Sociales</div>
+      <div class="sdesc">Apatía, insatisfacción ante la vida, pérdida de autoestima, aislamiento, ausentismo laboral y pérdida de solidaridad social.</div>
+    </div>
+  </div>
+
+  <div class="sdiv"><i class="fas fa-wrench"></i> ¿Cómo resolverlo?</div>
+
+  <ul class="obj-list">
+    <li><i class="fas fa-pause-circle"></i><div><strong>Pausas activas obligatorias</strong> durante la jornada laboral: levantarse, estirarse, despegarse de la pantalla.</div></li>
+    <li><i class="fas fa-plug-circle-xmark"></i><div><strong>Desconexión digital</strong> fuera del horario de trabajo: no revisar correos ni mensajes de trabajo.</div></li>
+    <li><i class="fas fa-graduation-cap"></i><div><strong>Capacitación continua</strong> para reducir la ansiedad ante nuevas tecnologías y cambios de sistemas.</div></li>
+    <li><i class="fas fa-chair"></i><div><strong>Enfoque ergonómico completo</strong> en el puesto de trabajo: ajustar silla, monitor, iluminación y temperatura.</div></li>
+    <li><i class="fas fa-person-running"></i><div><strong>Actividad física regular</strong> y contacto social fuera del ámbito digital.</div></li>
+    <li><i class="fas fa-user-doctor"></i><div><strong>Apoyo psicológico profesional</strong> en casos de estrés crónico o trastornos instalados.</div></li>
+  </ul>
+
+  <div class="callout warn" style="margin-top:24px;">
+    <i class="fas fa-triangle-exclamation"></i>
+    <div>El estrés tecnológico <strong>no desaparece solo</strong>. Ignorarlo lleva a consecuencias médicas, psicológicas y sociales que pueden volverse crónicas. La <strong>prevención temprana</strong> es la herramienta más eficaz.</div>
+  </div>
+</section>
+
+</main>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="ft-left">
+    <i class="fas fa-chalkboard-teacher"></i>
+    <span>Prof. Lourdes Pedaci &nbsp;·&nbsp; Seguridad Informática</span>
+  </div>
+  <a href="https://www.linkedin.com/in/lourdes-pedaci" target="_blank" class="linkedin-btn">
+    <i class="fab fa-linkedin"></i> LinkedIn
+  </a>
+</footer>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.getElementById('tab-' + id).classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+</script>
+</body>
+</html>
