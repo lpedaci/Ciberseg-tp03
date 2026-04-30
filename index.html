@@ -517,7 +517,97 @@
   footer a.linkedin-btn:hover { background: #094fa3; transform: scale(1.04); }
   footer a.linkedin-btn i { font-size: 14px; }
 
-  /* ── UTIL ── */
+  /* ── TEAM CARDS ── */
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 18px;
+    margin: 24px 0;
+  }
+  .team-card {
+    border-radius: var(--radius);
+    border: 2px solid;
+    background: #fff;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .team-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,0.13); }
+  .team-card-header {
+    padding: 18px 20px 14px;
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .team-num {
+    width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px; font-weight: 800; color: #fff; flex-shrink: 0;
+  }
+  .team-card-header h3 { font-size: 15px; margin: 0 0 4px; color: var(--primary); }
+  .team-card-header p  { font-size: 12px; color: var(--muted); margin: 0; }
+  .team-card-body { padding: 0 20px 18px; }
+  .team-tag {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 3px 10px;
+    border-radius: 20px; margin-bottom: 12px; color: #fff;
+  }
+  .team-norm {
+    background: var(--highlight);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12.5px;
+    color: var(--primary);
+    margin-bottom: 10px;
+  }
+  .team-norm strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 4px; }
+  .team-norm ul { padding-left: 14px; margin: 0; }
+  .team-norm ul li { margin-bottom: 2px; }
+
+  /* ── PRESENTATION OUTLINE ── */
+  .pres-outline {
+    background: var(--primary);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    margin: 28px 0;
+    color: #fff;
+  }
+  .pres-outline h3 { font-size: 16px; color: #fff; margin: 0 0 18px; display: flex; align-items: center; gap: 10px; }
+  .slides-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+  }
+  .slide-item {
+    background: rgba(255,255,255,0.09);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 10px;
+    padding: 14px;
+    transition: background 0.15s;
+  }
+  .slide-item:hover { background: rgba(255,255,255,0.15); }
+  .slide-num { font-size: 22px; font-weight: 800; color: rgba(255,255,255,0.2); line-height: 1; margin-bottom: 6px; }
+  .slide-title { font-size: 12.5px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .slide-desc  { font-size: 11px; color: rgba(255,255,255,0.65); line-height: 1.5; }
+
+  /* ── REQS BOX ── */
+  .req-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 20px 0;
+  }
+  @media(max-width:560px){ .req-grid { grid-template-columns: 1fr; } }
+  .req-item {
+    background: #fff;
+    border-radius: var(--radius);
+    border: 1.5px solid var(--border);
+    padding: 16px 18px;
+    display: flex; gap: 12px; align-items: flex-start;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  .req-item i { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+  .req-item h4 { font-size: 13px; font-weight: 700; color: var(--primary); margin: 0 0 4px; }
+  .req-item p  { font-size: 12.5px; color: var(--muted); margin: 0; }
   p { margin-bottom: 12px; }
   p:last-child { margin-bottom: 0; }
   strong { color: var(--primary); }
@@ -617,6 +707,9 @@
   </button>
   <button class="tab-btn" onclick="showTab('act4')" id="tab-act4">
     <i class="fas fa-brain"></i> Act. 4 – Estrés Tech
+  </button>
+  <button class="tab-btn" onclick="showTab('equipos')" id="tab-equipos">
+    <i class="fas fa-users"></i> Actividad Grupal
   </button>
 </div>
 
@@ -1262,6 +1355,317 @@
     <i class="fas fa-triangle-exclamation"></i>
     <div>El estrés tecnológico <strong>no desaparece solo</strong>. Ignorarlo lleva a consecuencias médicas, psicológicas y sociales que pueden volverse crónicas. La <strong>prevención temprana</strong> es la herramienta más eficaz.</div>
   </div>
+</section>
+
+<!-- ═══════════════════ ACTIVIDAD GRUPAL ═══════════════════ -->
+<section id="equipos">
+  <div class="sec-header">
+    <div class="sec-icon purple"><i class="fas fa-users"></i></div>
+    <div>
+      <div class="sec-title">Actividad Grupal – Plan de Acción por Equipo</div>
+      <div class="sec-sub">Basado en las situaciones del Caso Práctico · Granja de Servidores de IA</div>
+    </div>
+  </div>
+
+  <div class="callout info">
+    <i class="fas fa-circle-info"></i>
+    <div>Cada equipo tomará <strong>una temática del Caso Práctico</strong> y elaborará un <strong>plan de acción preventivo</strong> presentado como una presentación de diapositivas. La temática debe estar <strong>situada en Argentina</strong>, aplicando normativas y estándares nacionales vigentes.</div>
+  </div>
+
+  <!-- EQUIPOS -->
+  <div class="sdiv"><i class="fas fa-flag"></i> Distribución de Equipos</div>
+
+  <div class="team-grid">
+
+    <!-- EQUIPO 1 -->
+    <div class="team-card" style="border-color:#2563eb;">
+      <div class="team-card-header" style="background:#eff6ff;">
+        <div class="team-num" style="background:#2563eb;">1</div>
+        <div>
+          <h3>Instalación Eléctrica y Toma de Tierra</h3>
+          <p>Situación 1 del Caso Práctico</p>
+        </div>
+      </div>
+      <div class="team-card-body">
+        <span class="team-tag" style="background:#2563eb;"><i class="fas fa-bolt"></i> Electricidad</span>
+        <p style="font-size:13px; color:var(--muted); margin-bottom:12px;">Investigar y planificar una instalación eléctrica segura para una granja de servidores de IA en Argentina, incluyendo toma de tierra, protecciones y UPS.</p>
+        <div class="team-norm">
+          <strong>Normativas argentinas aplicables</strong>
+          <ul>
+            <li>Reglamento AEA 90364 – Instalaciones eléctricas de baja tensión</li>
+            <li>Ley 19.587 de Higiene y Seguridad en el Trabajo</li>
+            <li>Decreto 351/79 – Anexo VI (Instalaciones eléctricas)</li>
+            <li>Norma IRAM 2281 – Sistemas de puesta a tierra</li>
+            <li>ENRE (Ente Nacional Regulador de la Electricidad)</li>
+          </ul>
+        </div>
+        <div class="callout warn" style="margin:0; font-size:12px;">
+          <i class="fas fa-location-dot"></i>
+          <div>Contexto: granja de servidores en Argentina. Considerar cortes de luz frecuentes y variaciones de tensión propias de la red eléctrica argentina.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EQUIPO 2 -->
+    <div class="team-card" style="border-color:#0ea5e9;">
+      <div class="team-card-header" style="background:#f0f9ff;">
+        <div class="team-num" style="background:#0ea5e9;">2</div>
+        <div>
+          <h3>Prevención de Inundaciones y Humedad</h3>
+          <p>Situación 2 del Caso Práctico</p>
+        </div>
+      </div>
+      <div class="team-card-body">
+        <span class="team-tag" style="background:#0ea5e9;"><i class="fas fa-droplet"></i> Agua / Humedad</span>
+        <p style="font-size:13px; color:var(--muted); margin-bottom:12px;">Diseñar un plan de prevención ante inundaciones, filtraciones y humedad en un centro de datos situado en Argentina, considerando condiciones climáticas locales.</p>
+        <div class="team-norm">
+          <strong>Normativas argentinas aplicables</strong>
+          <ul>
+            <li>Ley 19.587 – Higiene y Seguridad en el Trabajo</li>
+            <li>Código de Edificación – GCBA (para Buenos Aires)</li>
+            <li>Norma IRAM 11605 – Acondicionamiento higrotérmico</li>
+            <li>Resolución SRT 295/03 – Ergonomía y condiciones edilicias</li>
+            <li>Reglamentos municipales de impermeabilización</li>
+          </ul>
+        </div>
+        <div class="callout warn" style="margin:0; font-size:12px;">
+          <i class="fas fa-location-dot"></i>
+          <div>Contexto: considerar lluvias intensas frecuentes en Buenos Aires y el AMBA, humedad ambiente alta y riesgo de inundaciones urbanas.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EQUIPO 3 -->
+    <div class="team-card" style="border-color:#dc2626;">
+      <div class="team-card-header" style="background:#fff0f0;">
+        <div class="team-num" style="background:#dc2626;">3</div>
+        <div>
+          <h3>Prevención y Extinción de Incendios</h3>
+          <p>Situación 3b del Caso Práctico</p>
+        </div>
+      </div>
+      <div class="team-card-body">
+        <span class="team-tag" style="background:#dc2626;"><i class="fas fa-fire"></i> Incendios</span>
+        <p style="font-size:13px; color:var(--muted); margin-bottom:12px;">Elaborar un plan contra incendios para la Zona A (Búnker de Servidores), incluyendo tipos de extintores, detectores, plan de evacuación y normativa argentina vigente.</p>
+        <div class="team-norm">
+          <strong>Normativas argentinas aplicables</strong>
+          <ul>
+            <li>Ley 19.587 – Capítulo 18: Protección contra incendios</li>
+            <li>Decreto 351/79 – Anexo VII: Protección contra incendios</li>
+            <li>Norma IRAM 3517 – Extintores portátiles</li>
+            <li>Norma IRAM 3590 – Sistemas de detección de incendio</li>
+            <li>Ley 5920/17 (CABA) – Código de Bomberos</li>
+            <li>Resolución INTI sobre agentes extintores para salas de cómputo</li>
+          </ul>
+        </div>
+        <div class="callout warn" style="margin:0; font-size:12px;">
+          <i class="fas fa-location-dot"></i>
+          <div>Contexto: sala de servidores con rack de alta densidad. Justificar por qué los extintores de CO₂ son obligatorios en este entorno y cuáles prohíbe la normativa argentina.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EQUIPO 4 -->
+    <div class="team-card" style="border-color:#f97316;">
+      <div class="team-card-header" style="background:#fff7ed;">
+        <div class="team-num" style="background:#f97316;">4</div>
+        <div>
+          <h3>Ventilación y Control de Temperatura</h3>
+          <p>Situación 3a del Caso Práctico</p>
+        </div>
+      </div>
+      <div class="team-card-body">
+        <span class="team-tag" style="background:#f97316;"><i class="fas fa-wind"></i> Ventilación</span>
+        <p style="font-size:13px; color:var(--muted); margin-bottom:12px;">Diseñar el sistema de climatización y ventilación para una granja de servidores de IA en Argentina, considerando pasillos fríos/calientes, eficiencia energética y normativa local.</p>
+        <div class="team-norm">
+          <strong>Normativas argentinas aplicables</strong>
+          <ul>
+            <li>Decreto 351/79 – Anexo IV: Condiciones ambientales</li>
+            <li>Resolución SRT 295/03 – Condiciones de temperatura</li>
+            <li>Norma IRAM 11659 – Climatización en edificios</li>
+            <li>ASHRAE TC 9.9 (adoptada en AR) – Ambientes para TI</li>
+            <li>Resolución SE 319/99 – Eficiencia energética en AR</li>
+          </ul>
+        </div>
+        <div class="callout warn" style="margin:0; font-size:12px;">
+          <i class="fas fa-location-dot"></i>
+          <div>Contexto: los servidores de IA trabajan al 100% generando calor extremo. Analizar el concepto de PUE (Power Usage Effectiveness) en data centers argentinos.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EQUIPO 5 -->
+    <div class="team-card" style="border-color:#16a34a;">
+      <div class="team-card-header" style="background:#f0fdf4;">
+        <div class="team-num" style="background:#16a34a;">5</div>
+        <div>
+          <h3>Control de Acceso y Restricciones Físicas</h3>
+          <p>Situación 4b/c del Caso Práctico</p>
+        </div>
+      </div>
+      <div class="team-card-body">
+        <span class="team-tag" style="background:#16a34a;"><i class="fas fa-lock"></i> Acceso</span>
+        <p style="font-size:13px; color:var(--muted); margin-bottom:12px;">Planificar un sistema de control de acceso físico por zonas (A, B, C, D) para la granja de servidores, incluyendo biometría, alarmas y CCTV, bajo normativa argentina.</p>
+        <div class="team-norm">
+          <strong>Normativas argentinas aplicables</strong>
+          <ul>
+            <li>Ley 25.326 – Protección de Datos Personales</li>
+            <li>Ley 19.587 – Higiene y Seguridad (acceso a zonas de riesgo)</li>
+            <li>Resolución ENACOM – Sistemas de videovigilancia</li>
+            <li>Norma IRAM-ISO/IEC 27001 – Gestión de seguridad de la información</li>
+            <li>Ley 26.388 – Delitos informáticos (sabotaje físico)</li>
+          </ul>
+        </div>
+        <div class="callout warn" style="margin:0; font-size:12px;">
+          <i class="fas fa-location-dot"></i>
+          <div>Contexto: analizar qué sistemas biométricos son legales en Argentina según la Ley 25.326 y cómo se gestionan los datos de los empleados que ingresan a la Zona A.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EQUIPO 6 -->
+    <div class="team-card" style="border-color:#7c3aed;">
+      <div class="team-card-header" style="background:#fdf4ff;">
+        <div class="team-num" style="background:#7c3aed;">6</div>
+        <div>
+          <h3>Polvo, Electroestática y Limpieza</h3>
+          <p>Tabla de Tipologías – Caso Práctico</p>
+        </div>
+      </div>
+      <div class="team-card-body">
+        <span class="team-tag" style="background:#7c3aed;"><i class="fas fa-broom"></i> Polvo / ESD</span>
+        <p style="font-size:13px; color:var(--muted); margin-bottom:12px;">Desarrollar un protocolo de mantenimiento y limpieza preventiva para hardware de alta densidad, incluyendo control de electroestática (ESD) bajo estándares argentinos e internacionales adoptados.</p>
+        <div class="team-norm">
+          <strong>Normativas argentinas aplicables</strong>
+          <ul>
+            <li>Norma IRAM 4220 – Control de electroestática (ESD)</li>
+            <li>Resolución SRT 523/07 – Riesgos físicos en el trabajo</li>
+            <li>Norma IEC 61340 (adoptada en AR) – Protección ESD</li>
+            <li>Decreto 351/79 – Anexo III: Contaminantes ambientales</li>
+            <li>Procedimientos de limpieza de centros de datos (ISO/IEC 24764)</li>
+          </ul>
+        </div>
+        <div class="callout warn" style="margin:0; font-size:12px;">
+          <i class="fas fa-location-dot"></i>
+          <div>Contexto: la impresora 3D en Zona B genera partículas ultrafinas. Analizar su impacto en los servidores de la Zona A y qué protocolos de filtrado aplican en Argentina.</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /team-grid -->
+
+  <!-- ESTRUCTURA DE PRESENTACIÓN -->
+  <div class="sdiv"><i class="fas fa-presentation-screen"></i> Estructura de la Presentación</div>
+
+  <div class="pres-outline">
+    <h3><i class="fas fa-layer-group"></i> Diapositivas requeridas (en este orden)</h3>
+    <div class="slides-grid">
+      <div class="slide-item">
+        <div class="slide-num">01</div>
+        <div class="slide-title">Carátula</div>
+        <div class="slide-desc">Nombre del equipo, integrantes, temática, institución y fecha.</div>
+      </div>
+      <div class="slide-item">
+        <div class="slide-num">02</div>
+        <div class="slide-title">Agenda Temática</div>
+        <div class="slide-desc">Índice visual con los puntos que se desarrollarán en la presentación.</div>
+      </div>
+      <div class="slide-item">
+        <div class="slide-num">03</div>
+        <div class="slide-title">Introducción al Tema</div>
+        <div class="slide-desc">Contextualización del problema en la granja de servidores. ¿Por qué es crítico este riesgo?</div>
+      </div>
+      <div class="slide-item">
+        <div class="slide-num">04</div>
+        <div class="slide-title">Consideraciones Técnicas</div>
+        <div class="slide-desc">Conceptos clave, definiciones, causas del riesgo y posibles consecuencias.</div>
+      </div>
+      <div class="slide-item">
+        <div class="slide-num">05</div>
+        <div class="slide-title">Plan de Aplicación</div>
+        <div class="slide-desc">Medidas concretas a implementar en cada zona del local. Con imágenes reales de equipos o instalaciones.</div>
+      </div>
+      <div class="slide-item">
+        <div class="slide-num">06</div>
+        <div class="slide-title">Costos Estimados</div>
+        <div class="slide-desc">Presupuesto referencial en pesos argentinos de los equipos/servicios propuestos.</div>
+      </div>
+      <div class="slide-item">
+        <div class="slide-num">07</div>
+        <div class="slide-title">Ventajas y Desventajas</div>
+        <div class="slide-desc">Análisis crítico de las soluciones propuestas: beneficios, limitaciones y comparativa de opciones.</div>
+      </div>
+      <div class="slide-item">
+        <div class="slide-num">08</div>
+        <div class="slide-title">Actualizaciones Futuras</div>
+        <div class="slide-desc">Tendencias tecnológicas y normativas en evolución. ¿Hacia dónde va el estándar en Argentina y el mundo?</div>
+      </div>
+      <div class="slide-item">
+        <div class="slide-num">09</div>
+        <div class="slide-title">Bibliografía</div>
+        <div class="slide-desc">Fuentes consultadas en formato APA. Incluir normativas, sitios oficiales y fuentes académicas.</div>
+      </div>
+      <div class="slide-item">
+        <div class="slide-num">10</div>
+        <div class="slide-title">Carátula de Cierre</div>
+        <div class="slide-desc">Slide final con mensaje de cierre, datos del equipo y espacio para preguntas.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REQUISITOS -->
+  <div class="sdiv"><i class="fas fa-clipboard-check"></i> Requisitos Obligatorios</div>
+
+  <div class="req-grid">
+    <div class="req-item">
+      <i class="fas fa-image" style="color:#2563eb;"></i>
+      <div>
+        <h4>Imágenes reales</h4>
+        <p>Deben incluirse fotografías reales de equipos, instalaciones o situaciones relacionadas con la temática. No se aceptan únicamente íconos o ilustraciones.</p>
+      </div>
+    </div>
+    <div class="req-item">
+      <i class="fas fa-location-dot" style="color:#dc2626;"></i>
+      <div>
+        <h4>Contextualización en Argentina</h4>
+        <p>La problemática y las soluciones deben estar situadas en el contexto argentino: marcas disponibles localmente, precios en pesos, proveedores nacionales.</p>
+      </div>
+    </div>
+    <div class="req-item">
+      <i class="fas fa-gavel" style="color:#d97706;"></i>
+      <div>
+        <h4>Normativas argentinas vigentes</h4>
+        <p>Cada slide de "Consideraciones" y "Plan de Aplicación" debe citar al menos una normativa argentina vigente aplicable a la temática del equipo.</p>
+      </div>
+    </div>
+    <div class="req-item">
+      <i class="fas fa-users" style="color:#16a34a;"></i>
+      <div>
+        <h4>Trabajo colaborativo</h4>
+        <p>La presentación debe evidenciar el aporte de todos los integrantes. Indicar en la carátula quién desarrolló cada sección.</p>
+      </div>
+    </div>
+    <div class="req-item">
+      <i class="fas fa-book" style="color:#7c3aed;"></i>
+      <div>
+        <h4>Bibliografía en APA</h4>
+        <p>Todas las fuentes consultadas deben citarse en formato APA. Incluir URL de normativas oficiales (infoleg.gob.ar, iram.org.ar, etc.).</p>
+      </div>
+    </div>
+    <div class="req-item">
+      <i class="fas fa-palette" style="color:#0ea5e9;"></i>
+      <div>
+        <h4>Diseño profesional</h4>
+        <p>Se recomienda usar Canva, Genial.ly o PowerPoint. El diseño debe ser coherente, legible y acorde a una presentación de nivel técnico-profesional.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout green" style="margin-top: 8px;">
+    <i class="fas fa-star"></i>
+    <div>Se evaluará: investigación realizada · tratamiento crítico de la información · uso de normativas argentinas · calidad de imágenes reales · presentación y diseño · participación grupal.</div>
+  </div>
+
 </section>
 
 </main>
