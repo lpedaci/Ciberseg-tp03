@@ -1388,20 +1388,20 @@
       </div>
       <div class="team-card-body">
         <span class="team-tag" style="background:#2563eb;"><i class="fas fa-bolt"></i> Electricidad</span>
-        <p style="font-size:13px; color:var(--muted); margin-bottom:12px;">Investigar y planificar una instalación eléctrica segura para una granja de servidores de IA en Argentina, incluyendo toma de tierra, protecciones y UPS.</p>
+        <p style="font-size:13px; color:var(--muted); margin:12px 0;">Investigar y planificar una instalación eléctrica segura para la granja de servidores de IA: toma de tierra, protecciones, UPS y cableado certificado para alta carga.</p>
         <div class="team-norm">
           <strong>Normativas argentinas aplicables</strong>
           <ul>
             <li>Reglamento AEA 90364 – Instalaciones eléctricas de baja tensión</li>
-            <li>Ley 19.587 de Higiene y Seguridad en el Trabajo</li>
-            <li>Decreto 351/79 – Anexo VI (Instalaciones eléctricas)</li>
-            <li>Norma IRAM 2281 – Sistemas de puesta a tierra</li>
-            <li>ENRE (Ente Nacional Regulador de la Electricidad)</li>
+            <li>Ley 19.587 – Higiene y Seguridad en el Trabajo</li>
+            <li>Decreto 351/79 – Anexo VI (instalaciones eléctricas)</li>
+            <li>Norma IRAM 2281 – Sistemas de puesta a tierra (jabalina)</li>
+            <li>ENRE – Ente Nacional Regulador de la Electricidad</li>
           </ul>
         </div>
         <div class="callout warn" style="margin:0; font-size:12px;">
           <i class="fas fa-location-dot"></i>
-          <div>Contexto: granja de servidores en Argentina. Considerar cortes de luz frecuentes y variaciones de tensión propias de la red eléctrica argentina.</div>
+          <div>Contexto: considerar cortes de luz frecuentes y variaciones de tensión propias de la red eléctrica argentina (EDENOR/EDESUR/EPEC según región).</div>
         </div>
       </div>
     </div>
@@ -1476,20 +1476,21 @@
       </div>
       <div class="team-card-body">
         <span class="team-tag" style="background:#f97316;"><i class="fas fa-wind"></i> Ventilación</span>
-        <p style="font-size:13px; color:var(--muted); margin-bottom:12px;">Diseñar el sistema de climatización y ventilación para una granja de servidores de IA en Argentina, considerando pasillos fríos/calientes, eficiencia energética y normativa local.</p>
+        <span class="team-tag" style="background:#ea580c; margin-left:4px;"><i class="fas fa-temperature-half"></i> Temperatura</span>
+        <p style="font-size:13px; color:var(--muted); margin:12px 0;">Diseñar el sistema de climatización y ventilación para la granja de servidores de IA: distribución de pasillos fríos/calientes, temperatura ideal por zona y selección de equipos para el contexto argentino.</p>
         <div class="team-norm">
           <strong>Normativas argentinas aplicables</strong>
           <ul>
-            <li>Decreto 351/79 – Anexo IV: Condiciones ambientales</li>
-            <li>Resolución SRT 295/03 – Condiciones de temperatura</li>
+            <li>Decreto 351/79 – Anexo IV: Condiciones ambientales de trabajo</li>
+            <li>Resolución SRT 295/03 – Temperatura y humedad en puestos de trabajo</li>
             <li>Norma IRAM 11659 – Climatización en edificios</li>
-            <li>ASHRAE TC 9.9 (adoptada en AR) – Ambientes para TI</li>
-            <li>Resolución SE 319/99 – Eficiencia energética en AR</li>
+            <li>Norma IRAM 11900 – Etiquetado de eficiencia energética de equipos</li>
+            <li>ASHRAE TC 9.9 (adoptada en AR) – Ambientes para equipos de TI</li>
           </ul>
         </div>
         <div class="callout warn" style="margin:0; font-size:12px;">
           <i class="fas fa-location-dot"></i>
-          <div>Contexto: los servidores de IA trabajan al 100% generando calor extremo. Analizar el concepto de PUE (Power Usage Effectiveness) en data centers argentinos.</div>
+          <div>Contexto: los servidores de IA trabajan al 100% generando calor extremo y concentrado en la Zona A. Analizar la necesidad de un sistema de climatización independiente para el Búnker. Considerar temperaturas extremas del verano en el AMBA (40°C+) y marcas disponibles en Argentina (Carrier, BGH, Midea).</div>
         </div>
       </div>
     </div>
@@ -1548,6 +1549,79 @@
         <div class="callout warn" style="margin:0; font-size:12px;">
           <i class="fas fa-location-dot"></i>
           <div>Contexto: la impresora 3D en Zona B genera partículas ultrafinas. Analizar su impacto en los servidores de la Zona A y qué protocolos de filtrado aplican en Argentina.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EQUIPO 7 -->
+    <div class="team-card" style="border-color:#059669; grid-column: 1 / -1;">
+      <div class="team-card-header" style="background:#ecfdf5;">
+        <div class="team-num" style="background:#059669;">7</div>
+        <div>
+          <h3>Gestión Energética, Eficiencia del Sistema e Iluminación</h3>
+          <p>Transversal al Caso Práctico – Ejes energético y lumínico</p>
+        </div>
+      </div>
+      <div class="team-card-body">
+        <span class="team-tag" style="background:#059669;"><i class="fas fa-gauge-high"></i> Energía</span>
+        <span class="team-tag" style="background:#047857; margin-left:4px;"><i class="fas fa-lightbulb"></i> Iluminación</span>
+        <span class="team-tag" style="background:#065f46; margin-left:4px;"><i class="fas fa-leaf"></i> Eficiencia</span>
+
+        <p style="font-size:13px; color:var(--muted); margin:12px 0;">Analizar de forma integral el <strong>consumo energético de la granja de servidores</strong>: servidores de IA, sistema de climatización e iluminación artificial. Proponer un plan de gestión energética eficiente situado en Argentina, considerando la interacción entre todos los sistemas y cómo las decisiones de diseño (puertas, iluminación, equipos) impactan en la factura eléctrica total.</p>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:12px; margin-bottom:12px;">
+
+          <div class="team-norm" style="margin:0;">
+            <strong>Eje 1 – Consumo de servidores de IA</strong>
+            <ul>
+              <li>Los servidores de IA trabajan al 100% de CPU/GPU durante el entrenamiento: consumo eléctrico máximo y continuo.</li>
+              <li>Métrica PUE (Power Usage Effectiveness): relación entre energía total del data center y energía usada por los equipos de TI. Ideal: 1.0. Data centers en AR: 1.5–2.0.</li>
+              <li>Comparar consumo del rack de alta densidad vs. oficina común.</li>
+              <li>Tarifa eléctrica T3 (gran demanda) de EDENOR/EDESUR: estimar costo mensual en pesos.</li>
+            </ul>
+          </div>
+
+          <div class="team-norm" style="margin:0;">
+            <strong>Eje 2 – Eficiencia de la climatización</strong>
+            <ul>
+              <li>Dimensionamiento correcto del AC: un equipo subdimensionado trabaja al 100% sin alcanzar la temperatura objetivo, generando desgaste y alto consumo. Uno sobredimensionado cicla seguido y también resulta ineficiente.</li>
+              <li>Indicadores EER y COP: a mayor valor, menos kWh por unidad de frío producida. Comparar marcas disponibles en Argentina.</li>
+              <li>Impacto de la apertura de puertas: cada vez que se abre la Zona A ingresa aire caliente y el AC debe compensar, generando un pico de consumo. Soluciones: esclusas de aire, burletes, protocolos de acceso breve.</li>
+              <li>El calor residual de la iluminación artificial se suma a la carga térmica que el AC debe disipar.</li>
+            </ul>
+          </div>
+
+          <div class="team-norm" style="margin:0;">
+            <strong>Eje 3 – Iluminación artificial y lumínica</strong>
+            <ul>
+              <li>El local tiene ventanas fijas (no se abren ni regulan), lo que genera dependencia total de iluminación artificial las 24 hs.</li>
+              <li>Cada zona requiere distintos niveles de luxes: Zona A (trabajo técnico con equipos): 500 lux; Zona B (trabajo en pantalla): 300–500 lux; Zona D (depósito): 100 lux.</li>
+              <li>Comparativa LED vs fluorescente: consumo, calor generado, vida útil y costo en Argentina.</li>
+              <li>Sensores de presencia y automatización lumínica para zonas de paso (Zona D, pasillos).</li>
+              <li>La luz LED, aunque eficiente, también genera calor residual que impacta en el AC.</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div class="team-norm">
+          <strong>Normativas argentinas aplicables</strong>
+          <ul style="columns:2; column-gap:24px;">
+            <li>Resolución SE 319/99 – Eficiencia energética en edificios</li>
+            <li>Norma IRAM 11604 – Eficiencia energética en edificios</li>
+            <li>Norma IRAM 11900 – Etiquetado eficiencia energética de equipos (AR)</li>
+            <li>Norma IRAM-AADL J 20-06 – Niveles de iluminación en interiores</li>
+            <li>Decreto 351/79 – Anexo IV: Iluminación y color en puestos de trabajo</li>
+            <li>Resolución SRT 295/03 – Iluminación en entornos laborales</li>
+            <li>Ley 27.191 – Energías renovables (fuentes alternativas de suministro)</li>
+            <li>ASHRAE TC 9.9 (adoptada en AR) – Métricas PUE para data centers</li>
+            <li>ENRE – Categorías tarifarias eléctricas (T1, T2, T3)</li>
+          </ul>
+        </div>
+
+        <div class="callout green" style="margin:0; font-size:12px;">
+          <i class="fas fa-location-dot"></i>
+          <div>Contexto argentino: la tarifa eléctrica T3 (gran demanda) aplica a instalaciones como una granja de servidores. Con cortes frecuentes en el AMBA y veranos de 40°C+, la eficiencia energética no es solo una cuestión ambiental sino también económica: <strong>cada kWh desperdiciado se traduce directamente en pesos en la factura mensual</strong>. Analizar si una instalación de paneles solares (Ley 27.191) podría compensar parte del consumo diurno.</div>
         </div>
       </div>
     </div>
